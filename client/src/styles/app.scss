@@ -1,7 +1,50 @@
+.buyHeading {
+  color: white;
+}
+
+.sellHeading {
+  color: white;
+}
+
 .buyText {
   color: red;
 }
 
 .sellText {
   color: green;
+}
+
+.buyAggregate {
+  float: left;
+  clear: both;
+  width: 100px;
+}
+
+.sellAggregate {
+  float: right;
+  width: 100px;
+}
+
+.box {
+  float: left;
+  width: 33.33%;
+  padding: 50px;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.formContent {
+  margin-left: 30px;
+}
+
+.centreContent {
+  margin-left: 50px;
+}
+
+.centreButton {
+  margin-left: 40px;
 }

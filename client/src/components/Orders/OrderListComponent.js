@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../../styles/app.scss";
-// import "../styles/Table.scss";
 
 const OrderListComponent = ({ orders }) => (
   <div>
