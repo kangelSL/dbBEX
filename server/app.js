@@ -47,12 +47,13 @@ io.on("connection", function(socket) {
 
     socket.on("postOrder", function(data, callback) {
       const result = new MatcherApi(data.payload);
-      console.log("processed order");
-      //Testing broadcast emit
-      socket.broadcast.emit("allMessage", {
-        message: "All responders should see this message"
+
+      //All responders need to be aware of the new state
+      socket.broadcast.emit("setUpdatedState", {
+        result: result
       });
 
+      //Update state on the screen
       callback(result);
     });
   });

@@ -1,9 +1,6 @@
+import store from "../store/store";
 import openSocket from "socket.io-client";
 const socket = openSocket("localhost:4000");
-
-socket.on("allMessage", function(data) {
-  alert(data.message);
-});
 
 export function getAccounts() {
   return function(dispatch) {
@@ -28,6 +25,10 @@ export function postData(payload, orders) {
     });
   };
 }
+
+socket.on("setUpdatedState", function(data) {
+  store.dispatch({ type: "UPDATED_STATE", payload: data.result });
+});
 
 export function updateAccountId() {}
 

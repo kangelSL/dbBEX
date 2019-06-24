@@ -47,12 +47,7 @@ function rootReducer(state = initialState, action) {
         [action.payload.name]: +action.payload.value
       };
 
-    case "STATE_UPDATED":
-      console.log("state updated");
-      return {
-        ...state,
-        orders: action.payload.orders
-      };
+    case "UPDATED_STATE":
     case "DATA_POSTED":
       let response = action.payload;
       let order = response.order;
@@ -61,7 +56,9 @@ function rootReducer(state = initialState, action) {
       let matchedOrder = "";
 
       // Alert user of order success/failure
-      alert(action.payload.result);
+      if (action.type === "DATA_POSTED") {
+        alert(action.payload.result);
+      }
 
       //If order matched then add to recent orders
       if (order.quantity === 0) {
