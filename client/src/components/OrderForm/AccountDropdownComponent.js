@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 // import "../styles/App.scss";
-// import "../../components/styles/Form.scss";
+import "../../styles/form.scss";
 
 const AccountDropdownComponent = ({ accounts, onAccountChange }) => (
-  <div className="formBody" style={{ width: 200 }}>
-    <select className="formElement" onChange={onAccountChange}>
+  <div className="accountDropdown">
+    <select onChange={onAccountChange}>
       {accounts &&
         accounts.map(account => (
           <option key={account.id} value={account.id}>

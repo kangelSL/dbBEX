@@ -45,6 +45,18 @@ io.on("connection", function(socket) {
       });
     });
 
+    socket.on("getTradeHistory", function({}, callback) {
+      console.log("Retrieving recent orders...");
+      const trades = bitcoinexchange.collection("matchedTrades", function(
+        err,
+        collection
+      ) {
+        collection.find({}).toArray(function(err, results) {
+          callback(results);
+        });
+      });
+    });
+
     socket.on("postOrder", function(data, callback) {
       const result = new MatcherApi(data.payload);
 

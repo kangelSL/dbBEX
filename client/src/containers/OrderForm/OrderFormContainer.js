@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { postData } from "../../actions/index";
 import { Form, Button, FormControl, FormGroup } from "react-bootstrap";
 
+import "../../styles/form.scss";
+
 class ConnectedForm extends Component {
   constructor(props) {
     super(props);
@@ -63,17 +65,15 @@ class ConnectedForm extends Component {
               value={this.price}
               onChange={this.handleChange}
             />
-            <div className="formBody">
-              <select
-                className="formElement"
-                id="action"
-                value={this.action}
-                onChange={this.handleChange}
-              >
-                <option value="1">Buy</option>
-                <option value="2">Sell</option>
-              </select>
-            </div>
+            <select
+              className="formElement"
+              id="action"
+              value={this.action}
+              onChange={this.handleChange}
+            >
+              <option value="1">Buy</option>
+              <option value="2">Sell</option>
+            </select>
           </FormGroup>
 
           <Button className="buttonStyling" type="submit">

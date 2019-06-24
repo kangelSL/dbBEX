@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import AccountDropdown from "../../containers/OrderForm/AccountDropdown";
+import RecentOrderContainer from "../../containers/OrderList/RecentOrderContainer";
+import HeaderComponent from "../PageElements/HeaderComponent";
 
 class RightColumnLayout extends Component {
   render() {
     return (
       <div id="sidebarColumn">
-        <AccountDropdown />
+        <HeaderComponent title="Trade History" id="headerComponent" />
+        <RecentOrderContainer />
       </div>
     );
   }
