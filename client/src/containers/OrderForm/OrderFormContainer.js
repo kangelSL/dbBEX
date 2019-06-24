@@ -30,8 +30,6 @@ class ConnectedForm extends Component {
       this.submitCallback()
     );
 
-    this.props.updateState(this.state);
-
     //Clear visible fields
     document.getElementById("quantity").value = "";
     document.getElementById("price").value = "";
@@ -89,7 +87,8 @@ class ConnectedForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentAccountId: state.currentAccountId
+    currentAccountId: state.currentAccountId,
+    orders: state.orders
   };
 }
 

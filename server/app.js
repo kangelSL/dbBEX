@@ -3,6 +3,8 @@ const io = require("socket.io").listen(4000);
 
 let url = "mongodb://127.0.0.1/bitcoinexchange";
 
+let MatcherApi = require("./matcher");
+
 io.on("connection", function(socket) {
   console.log("A challenger has appeared!!");
   console.log("connection made to socket.io, id: " + socket.id);
@@ -20,12 +22,6 @@ io.on("connection", function(socket) {
 
     socket.on("getAccounts", function({}, callback) {
       console.log("Retrieving accounts...");
-
-      //Testing broadcast emit
-      socket.broadcast.emit("logon", {
-        socketID: socket.id,
-        username: {}
-      });
 
       const accounts = bitcoinexchange.collection("accounts", function(
         err,
@@ -47,6 +43,17 @@ io.on("connection", function(socket) {
           callback(results);
         });
       });
+    });
+
+    socket.on("postOrder", function(data, callback) {
+      const result = new MatcherApi(data.payload);
+      console.log("processed order");
+      //Testing broadcast emit
+      socket.broadcast.emit("allMessage", {
+        message: "All responders should see this message"
+      });
+
+      callback(result);
     });
   });
 });

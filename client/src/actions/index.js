@@ -1,10 +1,12 @@
 import openSocket from "socket.io-client";
 const socket = openSocket("localhost:4000");
 
+socket.on("allMessage", function(data) {
+  alert(data.message);
+});
+
 export function getAccounts() {
   return function(dispatch) {
-    console.log("here1");
-
     return socket.emit("getAccounts", {}, function(accountData) {
       dispatch({ type: "ACCOUNTS_LOADED", payload: accountData });
     });
@@ -19,7 +21,13 @@ export function getOrders() {
   };
 }
 
-export function postData() {}
+export function postData(payload, orders) {
+  return function(dispatch) {
+    return socket.emit("postOrder", { payload }, function(nextState) {
+      dispatch({ type: "DATA_POSTED", payload: nextState });
+    });
+  };
+}
 
 export function updateAccountId() {}
 
