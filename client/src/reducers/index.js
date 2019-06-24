@@ -22,8 +22,6 @@ function rootReducer(state = initialState, action) {
         accounts: action.payload.accounts
       };
     case "ORDERS_LOADED":
-      console.log("got orders");
-      console.log(action);
       return {
         ...state,
         orders: action.payload
