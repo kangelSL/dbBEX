@@ -21,30 +21,30 @@ function getOrders() {
 
     // Sell data
     new Order(1, 180, 70, 2),
-    new Order(1, 150, 80, 2),
-    new Order(1, 130, 90, 2),
-    new Order(1, 120, 95, 2),
-    new Order(1, 115, 96, 2),
+    new Order(2, 150, 80, 2),
+    new Order(3, 130, 90, 2),
+    new Order(4, 120, 95, 2),
+    new Order(5, 115, 96, 2),
     new Order(1, 110, 97, 2),
-    new Order(1, 109, 100, 2),
-    new Order(1, 108, 100, 2),
-    new Order(1, 107, 105, 2),
-    new Order(1, 107, 110, 2),
+    new Order(2, 109, 100, 2),
+    new Order(3, 108, 100, 2),
+    new Order(4, 107, 105, 2),
+    new Order(5, 107, 110, 2),
     new Order(1, 106, 112, 2),
-    new Order(1, 105, 114, 2),
-    new Order(1, 104, 116, 2),
-    new Order(1, 103, 118, 2),
-    new Order(1, 100, 120, 2),
+    new Order(2, 105, 114, 2),
+    new Order(3, 104, 116, 2),
+    new Order(4, 103, 118, 2),
+    new Order(5, 100, 120, 2),
 
     //Buy data
     new Order(1, 100, 130, 1),
-    new Order(1, 110, 140, 1),
-    new Order(1, 120, 150, 1),
-    new Order(1, 130, 160, 1),
-    new Order(1, 150, 170, 1),
+    new Order(2, 110, 140, 1),
+    new Order(3, 120, 150, 1),
+    new Order(4, 130, 160, 1),
+    new Order(5, 150, 170, 1),
     new Order(1, 160, 180, 1),
-    new Order(1, 170, 190, 1),
-    new Order(2, 180, 200, 1)
+    new Order(2, 170, 190, 1),
+    new Order(3, 180, 200, 1)
   ];
 }
 

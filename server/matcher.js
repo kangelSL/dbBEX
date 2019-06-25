@@ -5,7 +5,7 @@ const ACTION_TYPES = {
   SELL: 2
 };
 
-function MatcherApi(order) {
+function MatcherApi(order, currentOrders) {
   const findOrder = {
     accountId: +order.accountId,
     quantity: +order.quantity,
@@ -15,7 +15,7 @@ function MatcherApi(order) {
   };
 
   //Get hardcoded data for now to make processing easier
-  const currentOrders = new Orders();
+  //const currentOrders = new Orders();
 
   const result = findTrade(findOrder, currentOrders);
 
@@ -37,19 +37,29 @@ function findTrade(order, currentOrders) {
   let trade = "";
 
   if (order.action === 1) {
-    trade = currentOrders.orders.find(
-      currentOrder =>
+    trade = currentOrders.find(function(currentOrder) {
+      return (
         currentOrder.acceptablePricePerCoin <= order.acceptablePricePerCoin &&
         currentOrder.accountId !== order.accountId &&
         currentOrder.action === ACTION_TYPES.SELL
-    );
+      );
+    });
+    // trade = currentOrders.orders.find(
+    //   currentOrder =>
+
+    // );
   } else {
-    trade = currentOrders.orders.find(
-      currentOrder =>
+    trade = currentOrders.find(function(currentOrder) {
+      return (
         currentOrder.acceptablePricePerCoin >= order.acceptablePricePerCoin &&
         currentOrder.accountId !== order.accountId &&
         currentOrder.action === ACTION_TYPES.BUY
-    );
+      );
+    });
+    // trade = currentOrders.orders.find(
+    //   currentOrder =>
+
+    // );
   }
 
   if (trade > "") {

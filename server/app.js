@@ -17,6 +17,15 @@ io.on("connection", function(socket) {
     //Set database constants
     const bitcoinexchange = db.db("bitcoinexchange");
 
+    // Set interval to get updates
+    setInterval(function() {
+      return function(dispatch) {
+        return socket.emit("getOrders", {}, function(orderData) {
+          dispatch({ type: ORDERS_LOADED, payload: orderData });
+        });
+      };
+    }, 5000);
+
     //const accounts = bitcoinexchange.collection("accounts");
     //const users = bitcoinexchange.collection("users");
 
@@ -58,15 +67,46 @@ io.on("connection", function(socket) {
     });
 
     socket.on("postOrder", function(data, callback) {
-      const result = new MatcherApi(data.payload);
+      const trades = bitcoinexchange.collection("trades", function(
+        err,
+        collection
+      ) {
+        collection.find({}).toArray(function(err, tradeData) {
+          //Pass current orders to function
+          //callback(results);
+          const result = new MatcherApi(data.payload, tradeData);
 
-      //All responders need to be aware of the new state
-      socket.broadcast.emit("setUpdatedState", {
-        result: result
+          const trades = bitcoinexchange.collection("trades");
+          const matchedTrades = bitcoinexchange.collection("matchedTrades");
+          let orderValues = result.originalOrder;
+
+          // Does new order need to be added into database?
+          if (result.order.quantity === 0) {
+            // All traded
+            matchedTrades.insertOne({
+              accountId: orderValues.accountId,
+              action: orderValues.action,
+              price: +orderValues.price,
+              quantity: +orderValues.quantity
+            });
+          } else {
+            trades.insertOne({
+              accountId: orderValues.accountId,
+              action: orderValues.action,
+              price: +orderValues.price,
+              quantity: +orderValues.quantity
+            });
+          }
+
+          //All responders need to be aware of the new state
+          socket.broadcast.emit("setUpdatedState", {
+            result: result
+          });
+
+          //Update state on the screen
+          callback(result);
+        });
       });
-
-      //Update state on the screen
-      callback(result);
     });
   });
 });

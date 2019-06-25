@@ -52,7 +52,7 @@ function rootReducer(state = initialState, action) {
       let response = action.payload;
       let order = response.order;
       let originalOrder = response.originalOrder;
-      let currentOrders = response.currentOrders.orders;
+      let currentOrders = response.currentOrders;
       let matchedOrder = "";
 
       // Alert user of order success/failure
