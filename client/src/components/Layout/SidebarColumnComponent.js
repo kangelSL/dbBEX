@@ -6,7 +6,7 @@ import HeaderComponent from "../PageElements/HeaderComponent";
 class SidebarColumnLayout extends Component {
   render() {
     return (
-      <div id="sidebarColumn">
+      <div id="sidebarColumn" className="fullColumn">
         <HeaderComponent title="Bitcoin Exchange" id="headerComponent" />
         <AccountDropdown />
         <OrderFormContainer />

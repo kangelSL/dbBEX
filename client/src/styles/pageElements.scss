@@ -1,8 +1,15 @@
 @import "variables";
 
+.fullColumn {
+  background-color: rgb(10, 10, 10);
+  //background-image: linear-gradient(to right, rgb(0, 0, 0), #423f3d, black);
+  border: 1px solid rgba(255, 255, 255, 0.171);
+  border-radius: 10px;
+}
+
 .header {
   height: 50px;
-  background-image: linear-gradient(rgb(0, 0, 0), rgb(99, 93, 93));
+  background-image: linear-gradient(rgb(0, 0, 0), rgb(10, 10, 10));
   color: white;
   font-family: Helvetica;
   text-align: center;

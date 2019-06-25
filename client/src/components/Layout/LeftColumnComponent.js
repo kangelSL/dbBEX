@@ -5,7 +5,7 @@ import HeaderComponent from "../PageElements/HeaderComponent";
 class SidebarColumnLayout extends Component {
   render() {
     return (
-      <div id="leftColumn">
+      <div id="leftColumn" className="fullColumn">
         <HeaderComponent title="Order Books" id="headerComponent" />
         <UnmatchedOrderContainer />
       </div>

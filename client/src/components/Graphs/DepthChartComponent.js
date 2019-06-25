@@ -58,7 +58,10 @@ class DepthChartComponent extends Component {
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr(
+        "transform",
+        "translate(" + (margin.top + 50) + "," + margin.top + ")"
+      );
 
     // Get the data
     let data = this.props.orders ? this.props.orders : [];
@@ -140,11 +143,17 @@ class DepthChartComponent extends Component {
     svg
       .append("g")
       .attr("class", "x axis")
+      .attr("color", "white")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
+    //X axis label
     svg
       .append("text")
+      .attr("stroke", "white")
+      .attr("stroke-width", 0.5)
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
       .attr("transform", "translate(215, 235)")
       .style("text-anchor", "middle")
       .text("Price");
@@ -152,12 +161,17 @@ class DepthChartComponent extends Component {
     // Add the Y Axis
     svg
       .append("g")
+      .attr("color", "white")
       .attr("class", "y axis")
       .call(yAxis);
 
     // text label for the y axis
     svg
       .append("text")
+      .attr("stroke", "white")
+      .attr("stroke-width", 0.5)
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
       .attr("transform", "rotate(-90)")
       .attr("y", 0 - margin.left)
       .attr("x", 0 - height / 2)
@@ -233,7 +247,7 @@ class DepthChartComponent extends Component {
   }
 
   render() {
-    return <div id="option" style={{ backgroundColor: "white", width: 700 }} />;
+    return <div id="option" style={{ backgroundColor: "black", width: 700 }} />;
   }
 }
 

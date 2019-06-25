@@ -6,7 +6,7 @@ import HeaderComponent from "../PageElements/HeaderComponent";
 class RightColumnLayout extends Component {
   render() {
     return (
-      <div id="sidebarColumn">
+      <div id="sidebarColumn" className="fullColumn">
         <HeaderComponent title="Trade History" id="headerComponent" />
         <RecentOrderContainer />
         <HeaderComponent title="Private Order Book" id="headerComponent" />

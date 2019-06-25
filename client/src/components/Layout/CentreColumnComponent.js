@@ -6,7 +6,7 @@ import AggregateOrderContainer from "../../containers/OrderList/AggregateOrderCo
 class CentreColumnLayout extends Component {
   render() {
     return (
-      <div id="centreColumn">
+      <div id="centreColumn" className="fullColumn">
         <HeaderComponent title="Price Charts" id="headerComponent" />
         <DepthChart />
         <AggregateOrderContainer />
