@@ -1,5 +1,3 @@
-const Orders = require("./class/Order");
-
 const ACTION_TYPES = {
   BUY: 1,
   SELL: 2
@@ -13,9 +11,6 @@ function MatcherApi(order, currentOrders) {
     action: +order.action,
     acceptablePricePerCoin: +order.price / +order.quantity
   };
-
-  //Get hardcoded data for now to make processing easier
-  //const currentOrders = new Orders();
 
   const result = findTrade(findOrder, currentOrders);
 

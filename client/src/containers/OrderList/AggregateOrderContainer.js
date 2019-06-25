@@ -37,7 +37,7 @@ class AggregateOrderContainer extends Component {
 
   render() {
     return (
-      <div class="clearfix">
+      <div className="clearfix">
         <div className="box">
           <HeaderComponent title="Buy" />
           <div className="centreContent">
