@@ -14,9 +14,7 @@ class AggregateOrderContainer extends Component {
   }
 
   updateAggregateTrades = async () => {
-    await this.props.getOrders();
-
-    //this.updateTime = setTimeout(this.updateAggregateTrades, 500);
+    this.props.getOrders();
   };
 
   getBuyListItems() {

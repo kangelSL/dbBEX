@@ -38,7 +38,7 @@ class ConnectedForm extends Component {
   }
 
   submitCallback() {
-    this.props.postData(this.state);
+    this.props.postData([this.state, this.props.orders]);
 
     this.setState({ quantity: "" });
     this.setState({ price: "" });

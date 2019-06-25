@@ -12,9 +12,7 @@ class PrivateOrderComponent extends Component {
   }
 
   updatePrivateTrades = async () => {
-    await this.props.getOrders(this.props.currentAccountId);
-
-    //this.updateTime = setTimeout(this.updatePrivateTrades, 500);
+    this.props.getOrders(this.props.currentAccountId);
   };
 
   getListItems() {
@@ -28,7 +26,6 @@ class PrivateOrderComponent extends Component {
   render() {
     return (
       <div>
-        <p>Current account: Account{this.props.currentAccountId}</p>
         <OrderListComponent orders={this.getListItems()} />
       </div>
     );

@@ -12,9 +12,9 @@ class UnmatchedOrderContainer extends Component {
   }
 
   updateUnmatchedTrades = async () => {
-    await this.props.getOrders();
+    this.props.getOrders();
 
-    this.updateTime = setTimeout(this.updateUnmatchedTrades, 500);
+    //this.updateTime = setTimeout(this.updateUnmatchedTrades, 10000);
   };
 
   getListItems() {

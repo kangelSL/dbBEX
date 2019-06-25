@@ -30,26 +30,25 @@ function MatcherApi(order, currentOrders) {
 
 function findTrade(order, currentOrders) {
   let trade = "";
+  let match;
 
   if (order.action === 1) {
-    trade = currentOrders.find(function(currentOrder) {
-      return (
-        currentOrder.acceptablePricePerCoin <= order.acceptablePricePerCoin &&
+    match = currentOrders.filter(function(currentOrder) {
+      currentOrder.acceptablePricePerCoin <= order.acceptablePricePerCoin &&
         currentOrder.accountId !== order.accountId &&
-        currentOrder.action === ACTION_TYPES.SELL
-      );
+        currentOrder.action === ACTION_TYPES.SELL;
     });
   } else {
-    trade = currentOrders.find(function(currentOrder) {
-      return (
-        currentOrder.acceptablePricePerCoin >= order.acceptablePricePerCoin &&
+    match = trade.currentOrders.filter(function(currentOrder) {
+      currentOrder.acceptablePricePerCoin >= order.acceptablePricePerCoin &&
         currentOrder.accountId !== order.accountId &&
-        currentOrder.action === ACTION_TYPES.BUY
-      );
+        currentOrder.action === ACTION_TYPES.BUY;
     });
   }
 
-  if (trade > "") {
+  if (match > "") {
+    trade = match[0];
+
     let difference = trade.quantity - order.quantity;
 
     //Make the trade

@@ -12,9 +12,9 @@ class RecentOrderContainer extends Component {
   }
 
   updateRecentTrades = async () => {
-    await this.props.getMatchedOrders();
+    this.props.getMatchedOrders();
 
-    this.updateTime = setTimeout(this.updateRecentTrades, 500);
+    //this.updateTime = setTimeout(this.updateRecentTrades, 10000);
   };
 
   getListItems() {

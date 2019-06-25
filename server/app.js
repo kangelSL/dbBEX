@@ -16,15 +16,7 @@ io.on("connection", function(socket) {
 
     //Set database constants
     const bitcoinexchange = db.db("bitcoinexchange");
-
-    // Set interval to get updates
-    // setInterval(function() {
-    //   return function(dispatch) {
-    //     return socket.emit("getOrders", {}, function(orderData) {
-    //       dispatch({ type: ORDERS_LOADED, payload: orderData });
-    //     });
-    //   };
-    // }, 5000);
+    const trades = bitcoinexchange.collection("trades");
 
     //const accounts = bitcoinexchange.collection("accounts");
     //const users = bitcoinexchange.collection("users");
@@ -76,49 +68,50 @@ io.on("connection", function(socket) {
     });
 
     socket.on("postOrder", function(data, callback) {
-      const trades = bitcoinexchange.collection("trades", function(
-        err,
-        collection
-      ) {
-        collection.find({}).toArray(function(err, tradeData) {
-          //Pass current orders to function
-          const result = new MatcherApi(data.payload, tradeData);
+      //Pass current orders to function
+      const result = new MatcherApi(data.payload[0], data.payload[1]);
 
-          const trades = bitcoinexchange.collection("trades");
-          const matchedTrades = bitcoinexchange.collection("matchedTrades");
-          let orderValues = result.originalOrder;
+      const matchedTrades = bitcoinexchange.collection("matchedTrades");
+      let orderValues = result.originalOrder;
 
-          // Need to update all unmatched trades
-          //trades.deleteMany();
-          //trades.insertMany(result.currentOrders);
+      // Need to update all unmatched trades
+      //trades.deleteMany();
+      //trades.insertMany(result.currentOrders);
 
-          // Does new order need to be added into database?
-          if (result.order.quantity === 0) {
-            // All traded
-            matchedTrades.insertOne({
-              accountId: orderValues.accountId,
-              action: orderValues.action,
-              price: +orderValues.price,
-              quantity: +orderValues.quantity
-            });
-          } else {
-            trades.insertOne({
-              accountId: orderValues.accountId,
-              action: orderValues.action,
-              price: +orderValues.price,
-              quantity: +orderValues.quantity
-            });
-          }
-
-          //All responders need to be aware of the new state
-          socket.broadcast.emit("setUpdatedState", {
-            result: result
-          });
-
-          //Update state on the screen
-          callback(result);
+      // Does new order need to be added into database?
+      if (result.order.quantity === 0) {
+        // All traded
+        matchedTrades.insertOne({
+          accountId: orderValues.accountId,
+          action: orderValues.action,
+          price: +orderValues.price,
+          quantity: +orderValues.quantity
         });
+      } else {
+        trades.insertOne({
+          accountId: orderValues.accountId,
+          action: orderValues.action,
+          price: +orderValues.price,
+          quantity: +orderValues.quantity
+        });
+      }
+
+      //All responders need to be aware of the new state
+      socket.broadcast.emit("setUpdatedState", {
+        result: result
       });
+
+      //Update state on the screen
+      callback(result);
+
+      // const trades = bitcoinexchange.collection("trades", function(
+      //   err,
+      //   collection
+      // ) {
+      //   collection.find({}).toArray(function(err, tradeData) {
+
+      //   });
+      // });
     });
   });
 });

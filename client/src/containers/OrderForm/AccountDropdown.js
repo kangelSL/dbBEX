@@ -1,8 +1,45 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { getAccounts } from "../../actions/index";
 import { updateAccountId } from "../../actions/index";
 import AccountDropdownComponent from "../../components/OrderForm/AccountDropdownComponent";
+import store from "../../store/store";
+
+// import openSocket from "socket.io-client";
+// const socket = openSocket("localhost:4000");
+
+// function AccountDropdown(props) {
+//   const [currentAccountId, setAccountId] = useState(1);
+//   const [accounts, setAccounts] = useState([]);
+
+//   // useEffect(async () => {});
+
+//   useEffect(() => {
+//     socket.emit("getAccounts", {}, function(accountData) {
+//       setAccounts(accountData);
+//     });
+//   }, []);
+
+//   console.log("bananas", accounts);
+//   return (
+//     <div>
+//       <select
+//         onChange={e => {
+//           setAccountId(e.target.value);
+//         }}
+//       >
+//         {accounts &&
+//           accounts.map(account => (
+//             <option key={account.id} value={account.id}>
+//               {account.name}
+//             </option>
+//           ))}
+//       </select>
+//     </div>
+//   );
+// }
+
+// export default connect(store)(AccountDropdown);
 
 class AccountDropdown extends Component {
   constructor(props) {
