@@ -4,10 +4,18 @@ import { getOrders } from "../../actions/index";
 import OrderListComponent from "../../components/Orders/OrderListComponent";
 
 class PrivateOrderComponent extends Component {
+  updateTime;
+
   componentDidMount() {
-    // Call websocket to get data
-    this.props.getOrders();
+    // Call the API to get data
+    this.updatePrivateTrades();
   }
+
+  updatePrivateTrades = async () => {
+    await this.props.getOrders(this.props.currentAccountId);
+
+    //this.updateTime = setTimeout(this.updatePrivateTrades, 500);
+  };
 
   getListItems() {
     let currentAccountId = this.props.currentAccountId;

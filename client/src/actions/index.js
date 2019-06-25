@@ -1,6 +1,8 @@
 import { ACCOUNTS_LOADED } from "../constants/actionTypes";
 import { DATA_POSTED } from "../constants/actionTypes";
+import { ORDERS_HISTORY_LOADED } from "../constants/actionTypes";
 import { ORDERS_LOADED } from "../constants/actionTypes";
+import { PRIVATE_ORDER_HISTORY_LOADED } from "../constants/actionTypes";
 import { UPDATE_ACCOUNT_ID } from "../constants/actionTypes";
 import { UPDATED_STATE } from "../constants/actionTypes";
 
@@ -16,10 +18,27 @@ export function getAccounts() {
   };
 }
 
+export function getFilteredOrders(currentAccountId) {
+  return function(dispatch) {
+    return socket.emit("getFilteredOrders", { currentAccountId }, function(
+      privateOrderData
+    ) {
+      let filteredOrderData = privateOrderData.filter(function(order) {
+        return +order.accountId === +currentAccountId;
+      });
+
+      dispatch({
+        type: PRIVATE_ORDER_HISTORY_LOADED,
+        payload: filteredOrderData
+      });
+    });
+  };
+}
+
 export function getMatchedOrders() {
   return function(dispatch) {
     return socket.emit("getTradeHistory", {}, function(myData) {
-      dispatch({ type: "ORDERS_HISTORY_LOADED", payload: myData });
+      dispatch({ type: ORDERS_HISTORY_LOADED, payload: myData });
     });
   };
 }

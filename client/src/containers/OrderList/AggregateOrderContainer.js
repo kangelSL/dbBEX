@@ -1,10 +1,24 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { AggregateData } from "../../reducers/data";
+import { getOrders } from "../../actions/index";
 import HeaderComponent from "../../components/PageElements/HeaderComponent";
 import "../../styles/app.scss";
 
 class AggregateOrderContainer extends Component {
+  updateTime;
+
+  componentDidMount() {
+    // Call the API to get data
+    this.updateAggregateTrades();
+  }
+
+  updateAggregateTrades = async () => {
+    await this.props.getOrders();
+
+    //this.updateTime = setTimeout(this.updateAggregateTrades, 500);
+  };
+
   getBuyListItems() {
     let aggregateArray = AggregateData(this.props.orders);
 
@@ -43,7 +57,7 @@ class AggregateOrderContainer extends Component {
           <div className="centreContent">
             <table>
               <thead>
-                <tr>
+                <tr className="tableHeading">
                   <th scope="col">Price</th>
                   <th scope="col">Quantity</th>
                 </tr>
@@ -57,7 +71,7 @@ class AggregateOrderContainer extends Component {
           <div className="centreContent">
             <table>
               <thead>
-                <tr>
+                <tr className="tableHeading">
                   <th scope="col">Price</th>
                   <th scope="col">Quantity</th>
                 </tr>
@@ -77,4 +91,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(AggregateOrderContainer);
+function mapDispatchToProps(dispatch) {
+  return {
+    getOrders: order => dispatch(getOrders(order))
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AggregateOrderContainer);

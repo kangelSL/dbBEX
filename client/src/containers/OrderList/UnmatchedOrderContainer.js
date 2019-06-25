@@ -4,14 +4,31 @@ import { getOrders } from "../../actions/index";
 import OrderListComponent from "../../components/Orders/OrderListComponent";
 
 class UnmatchedOrderContainer extends Component {
+  updateTime;
+
   componentDidMount() {
-    this.props.getOrders();
+    // Call the API to get data
+    this.updateUnmatchedTrades();
+  }
+
+  updateUnmatchedTrades = async () => {
+    await this.props.getOrders();
+
+    this.updateTime = setTimeout(this.updateUnmatchedTrades, 500);
+  };
+
+  getListItems() {
+    if (typeof this.props.orders !== "undefined") {
+      return this.props.orders;
+    } else {
+      return {};
+    }
   }
 
   render() {
     return (
       <div>
-        <OrderListComponent orders={this.props.orders} />
+        <OrderListComponent orders={this.getListItems()} />
       </div>
     );
   }

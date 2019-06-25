@@ -18,13 +18,13 @@ io.on("connection", function(socket) {
     const bitcoinexchange = db.db("bitcoinexchange");
 
     // Set interval to get updates
-    setInterval(function() {
-      return function(dispatch) {
-        return socket.emit("getOrders", {}, function(orderData) {
-          dispatch({ type: ORDERS_LOADED, payload: orderData });
-        });
-      };
-    }, 5000);
+    // setInterval(function() {
+    //   return function(dispatch) {
+    //     return socket.emit("getOrders", {}, function(orderData) {
+    //       dispatch({ type: ORDERS_LOADED, payload: orderData });
+    //     });
+    //   };
+    // }, 5000);
 
     //const accounts = bitcoinexchange.collection("accounts");
     //const users = bitcoinexchange.collection("users");
@@ -43,7 +43,17 @@ io.on("connection", function(socket) {
     });
 
     socket.on("getOrders", function({}, callback) {
-      console.log("Retrieving orders...");
+      const trades = bitcoinexchange.collection("trades", function(
+        err,
+        collection
+      ) {
+        collection.find({}).toArray(function(err, results) {
+          callback(results);
+        });
+      });
+    });
+
+    socket.on("getFilteredOrders", function({}, callback) {
       const trades = bitcoinexchange.collection("trades", function(
         err,
         collection
@@ -55,7 +65,6 @@ io.on("connection", function(socket) {
     });
 
     socket.on("getTradeHistory", function({}, callback) {
-      console.log("Retrieving recent orders...");
       const trades = bitcoinexchange.collection("matchedTrades", function(
         err,
         collection

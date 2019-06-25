@@ -5,7 +5,7 @@ const OrderListComponent = ({ orders }) => (
   <div>
     <table>
       <thead>
-        <tr>
+        <tr className="tableHeading">
           <th scope="col">Quantity</th>
           <th scope="col">Price</th>
         </tr>

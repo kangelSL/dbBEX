@@ -143,11 +143,27 @@ class DepthChartComponent extends Component {
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
+    svg
+      .append("text")
+      .attr("transform", "translate(215, 235)")
+      .style("text-anchor", "middle")
+      .text("Price");
+
     // Add the Y Axis
     svg
       .append("g")
       .attr("class", "y axis")
       .call(yAxis);
+
+    // text label for the y axis
+    svg
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x", 0 - height / 2)
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Quantity");
   }
 
   updateChart(data) {
