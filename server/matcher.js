@@ -39,10 +39,6 @@ function findTrade(order, currentOrders) {
         currentOrder.action === ACTION_TYPES.SELL
       );
     });
-    // trade = currentOrders.orders.find(
-    //   currentOrder =>
-
-    // );
   } else {
     trade = currentOrders.find(function(currentOrder) {
       return (
@@ -51,10 +47,6 @@ function findTrade(order, currentOrders) {
         currentOrder.action === ACTION_TYPES.BUY
       );
     });
-    // trade = currentOrders.orders.find(
-    //   currentOrder =>
-
-    // );
   }
 
   if (trade > "") {

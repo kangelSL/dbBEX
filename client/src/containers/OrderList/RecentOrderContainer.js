@@ -4,10 +4,18 @@ import { getMatchedOrders } from "../../actions/index";
 import OrderListComponent from "../../components/Orders/OrderListComponent";
 
 class RecentOrderContainer extends Component {
+  updateTime;
+
   componentDidMount() {
     // Call the API to get data
-    this.props.getMatchedOrders();
+    this.updateRecentTrades();
   }
+
+  updateRecentTrades = async () => {
+    await this.props.getMatchedOrders();
+
+    this.updateTime = setTimeout(this.updateRecentTrades, 500);
+  };
 
   getListItems() {
     if (typeof this.props.matchedOrders !== "undefined") {

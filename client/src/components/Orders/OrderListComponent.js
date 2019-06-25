@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "../../styles/app.scss";
 
 const OrderListComponent = ({ orders }) => (

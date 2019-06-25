@@ -73,12 +73,15 @@ io.on("connection", function(socket) {
       ) {
         collection.find({}).toArray(function(err, tradeData) {
           //Pass current orders to function
-          //callback(results);
           const result = new MatcherApi(data.payload, tradeData);
 
           const trades = bitcoinexchange.collection("trades");
           const matchedTrades = bitcoinexchange.collection("matchedTrades");
           let orderValues = result.originalOrder;
+
+          // Need to update all unmatched trades
+          //trades.deleteMany();
+          //trades.insertMany(result.currentOrders);
 
           // Does new order need to be added into database?
           if (result.order.quantity === 0) {
