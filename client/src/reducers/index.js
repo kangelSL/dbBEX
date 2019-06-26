@@ -1,4 +1,6 @@
-const initialState = {
+import React from "react";
+
+export const initialState = {
   accounts: [],
   orders: [],
   matchedOrders: [],
@@ -86,3 +88,5 @@ function rootReducer(state = initialState, action) {
 }
 
 export default rootReducer;
+
+export const Context = React.createContext();

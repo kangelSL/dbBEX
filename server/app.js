@@ -9,6 +9,9 @@ io.on("connection", function(socket) {
   console.log("A challenger has appeared!!");
   console.log("connection made to socket.io, id: " + socket.id);
 
+  // Join the main trades room
+  socket.join("unmatchedTrades");
+
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
 
@@ -74,10 +77,6 @@ io.on("connection", function(socket) {
       const matchedTrades = bitcoinexchange.collection("matchedTrades");
       let orderValues = result.originalOrder;
 
-      // Need to update all unmatched trades
-      //trades.deleteMany();
-      //trades.insertMany(result.currentOrders);
-
       // Does new order need to be added into database?
       if (result.order.quantity === 0) {
         // All traded
@@ -92,26 +91,18 @@ io.on("connection", function(socket) {
           accountId: orderValues.accountId,
           action: orderValues.action,
           price: +orderValues.price,
-          quantity: +orderValues.quantity
+          quantity: +orderValues.quantity,
+          acceptablePricePerCoin: +orderValues.price / +orderValues.quantity
         });
       }
 
       //All responders need to be aware of the new state
-      socket.broadcast.emit("setUpdatedState", {
+      socket.to("unmatchedTrades").emit("setUpdatedState", {
         result: result
       });
 
       //Update state on the screen
       callback(result);
-
-      // const trades = bitcoinexchange.collection("trades", function(
-      //   err,
-      //   collection
-      // ) {
-      //   collection.find({}).toArray(function(err, tradeData) {
-
-      //   });
-      // });
     });
   });
 });

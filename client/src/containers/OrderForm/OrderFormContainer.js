@@ -1,91 +1,86 @@
-import React, { Component } from "react";
+import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 import { postData } from "../../actions/index";
 import { Form, Button, FormControl, FormGroup } from "react-bootstrap";
 import "../../styles/app.scss";
 import "../../styles/form.scss";
 
-class ConnectedForm extends Component {
-  constructor(props) {
-    super(props);
+export const ConnectedForm = props => {
+  const [currentAccountId, setCurrentAccountId] = useState(
+    props.currentAccountId
+  );
+  const [action, setAction] = useState(1);
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
 
-    this.state = {
-      accountId: this.props.currentAccountId,
-      action: 1,
-      price: "",
-      quantity: ""
-    };
+  const quantityRef = useRef(null);
+  const priceRef = useRef(null);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
-  }
-
-  handleSubmit(event) {
+  const handleSubmit = event => {
     event.preventDefault();
 
     // Use callback to get any updates to current account id
-    this.setState({ accountId: this.props.currentAccountId }, () =>
-      this.submitCallback()
-    );
+    setCurrentAccountId(props.currentAccountId);
+    submitCallback();
 
     //Clear visible fields
-    document.getElementById("quantity").value = "";
-    document.getElementById("price").value = "";
-  }
+    console.log("quantityRef", quantityRef);
+    quantityRef.current.value = "";
+    priceRef.current.value = "";
+  };
 
-  submitCallback() {
-    this.props.postData([this.state, this.props.orders]);
+  const submitCallback = () => {
+    props.postData([
+      { currentAccountId, action, price, quantity },
+      props.orders
+    ]);
 
-    this.setState({ quantity: "" });
-    this.setState({ price: "" });
-  }
+    setQuantity("");
+    setPrice("");
+  };
 
-  render() {
-    return (
-      <div className="formBody">
-        <div className="formContent">
-          <Form onSubmit={this.handleSubmit}>
-            <FormGroup>
-              <FormControl
-                type="quantity"
-                id="quantity"
-                placeholder="Enter quantity"
-                className="formElement"
-                value={this.quantity}
-                onChange={this.handleChange}
-              />
-              <FormControl
-                type="price"
-                id="price"
-                placeholder="Enter price"
-                className="formElement"
-                value={this.price}
-                onChange={this.handleChange}
-              />
-              <select
-                className="formElement"
-                id="action"
-                value={this.action}
-                onChange={this.handleChange}
-              >
-                <option value="1">Buy</option>
-                <option value="2">Sell</option>
-              </select>
-            </FormGroup>
+  return (
+    <div className="formBody">
+      <div className="formContent">
+        <Form onSubmit={handleSubmit}>
+          <FormGroup>
+            <FormControl
+              type="quantity"
+              id="quantity"
+              ref={quantityRef}
+              placeholder="Enter quantity"
+              className="formElement"
+              value={quantity}
+              onChange={e => setQuantity(e.target.value)}
+            />
+            <FormControl
+              type="price"
+              id="price"
+              ref={priceRef}
+              placeholder="Enter price"
+              className="formElement"
+              value={price}
+              onChange={e => setPrice(e.target.value)}
+            />
+            <select
+              className="formElement"
+              id="action"
+              value={action}
+              onChange={e => setAction(e.target.value)}
+            >
+              <option value="1">Buy</option>
+              <option value="2">Sell</option>
+            </select>
+          </FormGroup>
 
-            <Button className="buttonStyling centreButton" type="submit">
-              Submit
-            </Button>
-          </Form>
-        </div>
+          <Button className="buttonStyling centreButton" type="submit">
+            Submit
+          </Button>
+        </Form>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 function mapStateToProps(state) {
   return {
